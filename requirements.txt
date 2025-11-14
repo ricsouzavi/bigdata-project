@@ -1,0 +1,12 @@
+asgiref==3.10.0
+# Editable Git install with no remote (bigdata-project==0.1.0)
+-e /home/ricardo/Documentos/project-bigdata-django/bigdata-project
+Django==5.2.8
+django-cors-headers==4.9.0
+numpy==2.3.4
+pandas==2.3.3
+python-dateutil==2.9.0.post0
+pytz==2025.2
+six==1.17.0
+sqlparse==0.5.3
+tzdata==2025.2
