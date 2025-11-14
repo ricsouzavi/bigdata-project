@@ -1,0 +1,101 @@
+ano,cidade,bairro,area_m2,quartos,preco
+2015,Teresina,Joquei,90,3,390000
+2015,Teresina,Fatima,75,2,350000
+2015,Teresina,Ilhotas,80,2,360000
+2015,Teresina,Morada do Sol,110,3,480000
+2015,Teresina,Ininga,100,3,430000
+2015,Teresina,Joquei,130,4,610000
+2015,Teresina,Fatima,65,2,330000
+2015,Teresina,Ilhotas,70,2,345000
+2015,Teresina,Morada do Sol,100,3,460000
+2015,Teresina,Ininga,90,3,410000
+2016,Teresina,Morada do Sol,110,3,495000
+2016,Teresina,Joquei,95,3,420000
+2016,Teresina,Ininga,85,3,400000
+2016,Teresina,Fatima,80,2,380000
+2016,Teresina,Ilhotas,80,2,375000
+2016,Teresina,Joquei,140,4,650000
+2016,Teresina,Fatima,70,2,360000
+2016,Teresina,Ilhotas,75,2,365000
+2016,Teresina,Morada do Sol,120,3,510000
+2016,Teresina,Ininga,100,3,440000
+2017,Teresina,Fatima,80,2,410000
+2017,Teresina,Ilhotas,85,2,420000
+2017,Teresina,Morada do Sol,115,3,520000
+2017,Teresina,Joquei,100,3,480000
+2017,Teresina,Ininga,90,3,470000
+2017,Teresina,Fatima,85,2,430000
+2017,Teresina,Joquei,150,4,710000
+2017,Teresina,Ilhotas,90,3,440000
+2017,Teresina,Morada do Sol,130,3,560000
+2017,Teresina,Ininga,110,3,500000
+2018,Teresina,Joquei,100,3,500000
+2018,Teresina,Ininga,90,3,490000
+2018,Teresina,Fatima,85,2,460000
+2018,Teresina,Ilhotas,90,3,475000
+2018,Teresina,Morada do Sol,120,3,590000
+2018,Teresina,Joquei,160,4,780000
+2018,Teresina,Fatima,70,2,440000
+2018,Teresina,Ilhotas,80,2,460000
+2018,Teresina,Morada do Sol,125,3,600000
+2018,Teresina,Ininga,120,3,540000
+2019,Teresina,Ilhotas,90,2,490000
+2019,Teresina,Morada do Sol,120,3,590000
+2019,Teresina,Joquei,105,3,540000
+2019,Teresina,Ininga,95,3,530000
+2019,Teresina,Fatima,90,2,510000
+2019,Teresina,Joquei,170,4,850000
+2019,Teresina,Fatima,80,2,495000
+2019,Teresina,Ilhotas,95,3,510000
+2019,Teresina,Morada do Sol,130,3,630000
+2019,Teresina,Ininga,115,3,570000
+2020,Teresina,Ininga,95,3,550000
+2020,Teresina,Fatima,90,2,530000
+2020,Teresina,Ilhotas,95,3,560000
+2020,Teresina,Morada do Sol,125,3,640000
+2020,Teresina,Joquei,110,3,600000
+2020,Teresina,Fatima,75,2,510000
+2020,Teresina,Joquei,180,4,930000
+2020,Teresina,Ilhotas,85,2,540000
+2020,Teresina,Morada do Sol,140,4,690000
+2020,Teresina,Ininga,120,3,600000
+2021,Teresina,Ilhotas,95,3,580000
+2021,Teresina,Morada do Sol,125,3,670000
+2021,Teresina,Joquei,110,3,630000
+2021,Teresina,Ininga,100,3,590000
+2021,Teresina,Fatima,95,3,580000
+2021,Teresina,Joquei,190,4,1050000
+2021,Teresina,Fatima,80,2,560000
+2021,Teresina,Ilhotas,90,3,570000
+2021,Teresina,Morada do Sol,150,4,740000
+2021,Teresina,Ininga,130,3,650000
+2022,Teresina,Ininga,100,3,620000
+2022,Teresina,Fatima,95,3,610000
+2022,Teresina,Ilhotas,100,3,610000
+2022,Teresina,Morada do Sol,130,3,720000
+2022,Teresina,Joquei,115,3,670000
+2022,Teresina,Fatima,85,2,590000
+2022,Teresina,Joquei,200,4,1180000
+2022,Teresina,Ilhotas,100,3,630000
+2022,Teresina,Morada do Sol,160,4,800000
+2022,Teresina,Ininga,140,3,710000
+2023,Teresina,Morada do Sol,130,3,750000
+2023,Teresina,Joquei,115,3,710000
+2023,Teresina,Ininga,105,3,650000
+2023,Teresina,Fatima,100,3,660000
+2023,Teresina,Ilhotas,100,3,670000
+2023,Teresina,Joquei,210,4,1300000
+2023,Teresina,Fatima,90,2,640000
+2Good,Teresina,Ilhotas,110,3,690000
+2023,Teresina,Morada do Sol,170,4,880000
+2023,Teresina,Ininga,150,4,790000
+2024,Teresina,Fatima,100,3,700000
+2024,Teresina,Ilhotas,105,3,720000
+2024,Teresina,Morada do Sol,135,4,800000
+2024,Teresina,Joquei,120,3,790000
+2024,Teresina,Ininga,110,3,700000
+2024,Teresina,Joquei,220,4,1450000
+2024,Teresina,Fatima,95,3,690000
+2024,Teresina,Ilhotas,120,3,740000
+2024,Teresina,Morada do Sol,180,4,980000
+2024,Teresina,Ininga,160,4,850000

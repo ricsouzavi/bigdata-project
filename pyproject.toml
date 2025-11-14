@@ -1,0 +1,21 @@
+[project]
+name = "bigdata-project"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "ricardosouza",email = "ricardosouzavie@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "django (>=5.2.8,<6.0.0)",
+    "pandas (>=2.3.3,<3.0.0)",
+    "django-cors-headers (>=4.9.0,<5.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "bigdata_project", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Imóveis - Teresina</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        canvas {
+            width: 100% !important;
+            height: 450px !important;
+        }
+        
+        /* Estilos para os Filtros e Tabela */
+        .filtros {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .filtros select, .filtros button {
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .filtros button {
+            background-color: #007bff; /* Cor do Django */
+            color: white;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Análise de Preços de Imóveis (Django + Pandas)</h1>
+    <h2>Teresina (2015-2024)</h2>
+
+    <div class="container">
+        <h2>Filtrar Imóveis (Query Dinâmica)</h2>
+        <div class="filtros">
+            <select id="filtro-ano">
+                <option value="">-- Selecione um Ano --</option>
+                <script>
+                    for(let i = 2024; i >= 2015; i--) {
+                        document.write(`<option value="${i}">${i}</option>`);
+                    }
+                </script>
+            </select>
+            
+            <select id="filtro-bairro">
+                <option value="">-- Selecione um Bairro --</option>
+                <option value="Joquei">Jóquei</option>
+                <option value="Fatima">Fátima</option>
+                <option value="Ilhotas">Ilhotas</option>
+                <option value="Morada do Sol">Morada do Sol</option>
+                <option value="Ininga">Ininga</option>
+            </select>
+            
+            <button onclick="aplicarFiltros()">Filtrar</button>
+        </div>
+        
+        <table id="tabela-resultados">
+            <thead>
+                <tr>
+                    <th>Ano</th>
+                    <th>Bairro</th>
+                    <th>Área (m²)</th>
+                    <th>Quartos</th>
+                    <th>Preço (R$)</th>
+                </tr>
+            </thead>
+            <tbody id="corpo-tabela">
+                <tr><td colspan="5">Use os filtros acima para carregar os dados.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container">
+        <h2>Evolução do Preço Médio por Ano</h2>
+        <canvas id="graficoEvolucaoAno"></canvas>
+    </div>
+
+    <div class="container">
+        <h2>Preço Médio por Bairro (Último Ano)</h2>
+        <canvas id="graficoPrecoBairro"></canvas>
+    </div>
+
+    <script>
+        // Função para formatar números como Moeda (R$)
+        function formatarMoeda(valor) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(valor);
+        }
+
+        // --- SCRIPT PARA FILTROS ---
+        async function aplicarFiltros() {
+            const ano = document.getElementById('filtro-ano').value;
+            const bairro = document.getElementById('filtro-bairro').value;
+            const corpoTabela = document.getElementById('corpo-tabela');
+            
+            // 1. Monta a URL da API (note a / no final!)
+            let url = 'http://127.0.0.1:8000/api/filtrar/?'; // <--- URL DO DJANGO
+            if (ano) {
+                url += `ano=${ano}&`;
+            }
+            if (bairro) {
+                url += `bairro=${bairro}&`;
+            }
+            
+            corpoTabela.innerHTML = '<tr><td colspan="5">Buscando dados...</td></tr>';
+            
+            try {
+                // 2. Chama a API
+                const response = await fetch(url);
+                const dados = await response.json();
+                
+                corpoTabela.innerHTML = ''; // Limpa a tabela
+                
+                if (dados.length === 0) {
+                    corpoTabela.innerHTML = '<tr><td colspan="5">Nenhum resultado encontrado.</td></tr>';
+                    return;
+                }
+                
+                // 4. Preenche a tabela com os resultados
+                dados.forEach(imovel => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${imovel.ano}</td>
+                        <td>${imovel.bairro}</td>
+                        <td>${imovel.area_m2}</td>
+                        <td>${imovel.quartos}</td>
+                        <td>${formatarMoeda(imovel.preco)}</td>
+                    `;
+                    corpoTabela.appendChild(tr);
+                });
+                
+            } catch (error) {
+                console.error('Erro ao filtrar dados:', error);
+                corpoTabela.innerHTML = '<tr><td colspan="5">Erro ao buscar dados da API.</td></tr>';
+            }
+        }
+        
+        // --- SCRIPT DOS GRÁFICOS (Roda ao carregar a página) ---
+        window.onload = async function() {
+            try {
+                // Gráfico 1: Evolução por Ano
+                // (Note a / no final!)
+                const responseAno = await fetch('http://127.0.0.1:8000/api/evolucao-ano/'); // <--- URL DO DJANGO
+                const dadosAno = await responseAno.json();
+                const labelsAno = dadosAno.map(item => item.ano);
+                const dataAno = dadosAno.map(item => item.preco_medio);
+
+                const ctxAno = document.getElementById('graficoEvolucaoAno').getContext('2d');
+                new Chart(ctxAno, {
+                    type: 'line',
+                    data: { labels: labelsAno, datasets: [{
+                        label: 'Preço Médio (R$)',
+                        data: dataAno,
+                        borderColor: '#092e20', /* Cor do Django */
+                        backgroundColor: 'rgba(9, 46, 32, 0.1)',
+                        fill: true,
+                        tension: 0.1
+                    }]},
+                    options: { responsive: true, plugins: { tooltip: { callbacks: { label: (c) => formatarMoeda(c.parsed.y) }}},
+                        scales: { y: { ticks: { callback: (v) => formatarMoeda(v) }}}
+                    }
+                });
+
+                // Gráfico 2: Preço por Bairro
+                // (Note a / no final!)
+                const responseBairro = await fetch('http://127.0.0.1:8000/api/preco-bairro/'); // <--- URL DO DJANGO
+                const dadosBairro = await responseBairro.json();
+                const labelsBairro = dadosBairro.map(item => item.bairro);
+                const dataBairro = dadosBairro.map(item => item.preco_medio_ultimo_ano);
+
+                const ctxBairro = document.getElementById('graficoPrecoBairro').getContext('2d');
+                new Chart(ctxBairro, {
+                    type: 'bar',
+                    data: { labels: labelsBairro, datasets: [{
+                        label: 'Preço Médio no Último Ano (R$)',
+                        data: dataBairro,
+                        backgroundColor: ['#092e20', '#205c40', '#34865f', '#48b07e', '#5ccf9c']
+                    }]},
+                     options: { indexAxis: 'y', responsive: true, plugins: { tooltip: { callbacks: { label: (c) => formatarMoeda(c.parsed.x) }}},
+                        scales: { x: { ticks: { callback: (v) => formatarMoeda(v) }}}
+                    }
+                });
+
+            } catch (error) {
+                console.error('Erro ao carregar dados dos gráficos:', error);
+                alert('Erro ao carregar dados. Verifique se o servidor Django está rodando.');
+            }
+        };
+    </script>
+
+</body>
+</html>
